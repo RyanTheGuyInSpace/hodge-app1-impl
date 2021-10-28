@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="baseline.ToDoList">
+   <children>
+      <SplitPane prefHeight="400.0" prefWidth="196.0">
+         <items>
+            <ListView prefHeight="200.0" prefWidth="200.0" />
+         </items>
+      </SplitPane>
+      <ScrollPane layoutX="196.0" prefHeight="398.0" prefWidth="401.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="399.0">
+               <children>
+                  <Label layoutX="57.0" layoutY="22.0" prefHeight="27.0" prefWidth="255.0" text="Items" />
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>
