@@ -24,12 +24,6 @@ public class Application extends javafx.application.Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("To-Do List");
 
-        button = new Button();
-        button.setText("New List");
-
-        StackPane layout = new StackPane();
-        layout.getChildren().add(button);
-
         Parent root = FXMLLoader.load(getClass().getResource("ToDoList.fxml"));
 
         Scene scene = new Scene(root, 800, 600);
