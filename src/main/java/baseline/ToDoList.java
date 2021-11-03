@@ -8,6 +8,7 @@ package baseline;
 import java.util.LinkedList;
 
 public class ToDoList {
+    long id;
     String title;
     LinkedList<Task> tasks;
 
