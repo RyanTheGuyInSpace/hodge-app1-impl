@@ -2,9 +2,11 @@
 
 class ToDoListManager {
     +createList(String title);
+    +selectList(long id);
 }
 
 class ToDoList {
+    -long id;
     -String title;
     -LinkedList<Task> tasks;
 
@@ -12,7 +14,6 @@ class ToDoList {
     +deleteTask();
     +rename();
     +delete();
-
 }
 
 class Task {
@@ -24,7 +25,11 @@ class Task {
     -Date dateCompleted;
     -boolean isComplete;
 
-    +delete()
+    +setDescription(String description);
+    +setDueDate(Date dueDate);
+    +setComplete();
+    +setIncomplete();
+    +delete();
 }
 
 @enduml
