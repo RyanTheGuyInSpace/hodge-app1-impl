@@ -6,18 +6,18 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="baseline.GUIController">
+<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="baseline.MainController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
-            <ListView layoutY="36.0" prefHeight="362.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0" />
-            <Button layoutX="149.0" layoutY="4.0" mnemonicParsing="false" text="+" onMouseClicked="#createList" />
-            <TextField layoutX="3.0" layoutY="4.0" prefHeight="26.0" prefWidth="140.0" />
+            <ListView fx:id="toDoListingBox" layoutY="36.0" prefHeight="362.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0" />
+            <Button fx:id="addListButton" layoutX="149.0" layoutY="4.0" mnemonicParsing="false" onMouseClicked="#createList" text="+" />
+            <TextField fx:id="newListInputField" layoutX="3.0" layoutY="4.0" prefHeight="26.0" prefWidth="140.0" />
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
-            <ListView layoutY="36.0" prefHeight="362.0" prefWidth="418.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0" />
-            <TextField layoutX="7.0" layoutY="4.0" prefHeight="26.0" prefWidth="266.0" />
+            <ListView fx:id="toDoListItemsBox" layoutY="36.0" prefHeight="362.0" prefWidth="418.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0" />
+            <TextField fx:id="renameListField" layoutX="7.0" layoutY="4.0" prefHeight="26.0" prefWidth="266.0" />
          </children></AnchorPane>
   </items>
 </SplitPane>
