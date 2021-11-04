@@ -15,6 +15,8 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
+    public ToDoListManager manager = new ToDoListManager();
+
     @FXML
     public ListView toDoListingBox;
 
@@ -43,13 +45,14 @@ public class MainController implements Initializable {
      */
     @FXML
     public void createList() {
-        System.out.println(addListButton.getScene());
+        String toDoListName = newListInputField.getText();
+        newListInputField.clear();
+
+        ToDoList list = ToDoListManager.createList(toDoListName);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         scene = newListInputField.getScene();
-
-        newListInputField.setText("Something");
     }
 }

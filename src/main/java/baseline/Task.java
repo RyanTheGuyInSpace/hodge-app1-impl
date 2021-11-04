@@ -8,14 +8,13 @@ package baseline;
 import java.util.Date;
 
 public class Task {
+    long id;
     String description;
 
     /**
      * Formatted as YYYY-MM-DD
      */
     Date dueDate;
-    Date dateCreated;
-    Date dateCompleted;
     boolean isComplete;
 
     /**

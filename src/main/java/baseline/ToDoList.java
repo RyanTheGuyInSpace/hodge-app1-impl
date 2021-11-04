@@ -8,7 +8,6 @@ package baseline;
 import java.util.LinkedList;
 
 public class ToDoList {
-    long id;
     String title;
     LinkedList<Task> tasks;
 
@@ -41,6 +40,20 @@ public class ToDoList {
      * Deletes this ToDoList
      */
     public void delete() {
+
+    }
+
+    /**
+     * TODO cannot document this until we figure out how to actually store the lists on disk
+     */
+    public void save() {
+
+    }
+
+    /**
+     * Finds
+     */
+    public void load() {
 
     }
 }

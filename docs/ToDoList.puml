@@ -6,7 +6,6 @@ class ToDoListManager {
 }
 
 class ToDoList {
-    -long id;
     -String title;
     -LinkedList<Task> tasks;
 
@@ -17,12 +16,11 @@ class ToDoList {
 }
 
 class Task {
+    -long id;
     -String description;
     -Date dueDate;
     'Format due date as YYYY-MM-DD'
 
-    -Date dateCreated;
-    -Date dateCompleted;
     -boolean isComplete;
 
     +setDescription(String description);
