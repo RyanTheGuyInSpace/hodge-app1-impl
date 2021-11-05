@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Summer 2021 Application Assignment 1 Solution
+ *  Copyright 2021 Ryan Hodge
+ */
+
 package baseline;
 
 import javafx.fxml.FXML;
@@ -33,7 +38,7 @@ public class MainController implements Initializable {
     public TextField renameListField;
 
     @FXML
-    private Button addListButton;
+    private Button addTaskButton;
 
     /**
      * Creates a list using the text inside the adjacent text field.

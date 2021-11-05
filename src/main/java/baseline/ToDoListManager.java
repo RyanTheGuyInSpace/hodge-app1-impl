@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Summer 2021 Application Assignment 1 Solution
+ *  Copyright 2021 Ryan Hodge
+ */
+
 package baseline;
 
 import com.google.gson.Gson;
@@ -20,7 +25,7 @@ public class ToDoListManager {
 
         list.title = title;
 
-        return new ToDoList();
+        return list;
     }
 
     /**

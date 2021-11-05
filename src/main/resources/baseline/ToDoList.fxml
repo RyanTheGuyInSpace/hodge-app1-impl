@@ -11,13 +11,13 @@
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
             <ListView fx:id="toDoListingBox" layoutY="36.0" prefHeight="362.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0" />
-            <Button fx:id="addListButton" layoutX="149.0" layoutY="4.0" mnemonicParsing="false" onMouseClicked="#createList" text="+" />
             <TextField fx:id="newListInputField" layoutX="3.0" layoutY="4.0" prefHeight="26.0" prefWidth="140.0" />
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
             <ListView fx:id="toDoListItemsBox" layoutY="36.0" prefHeight="362.0" prefWidth="418.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0" />
             <TextField fx:id="renameListField" layoutX="7.0" layoutY="4.0" prefHeight="26.0" prefWidth="266.0" />
+            <Button fx:id="addTaskButton" layoutX="278.0" layoutY="4.0" mnemonicParsing="false" onMouseClicked="#createList" text="+" />
          </children></AnchorPane>
   </items>
 </SplitPane>
