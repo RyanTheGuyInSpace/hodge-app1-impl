@@ -5,6 +5,8 @@
 
 package baseline;
 
+import com.sun.tools.javac.Main;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -33,7 +35,7 @@ public class ToDoList {
         task.isComplete = false;
 
         try {
-            ToDoListManager.serializer.toJson(task, new FileWriter(""));
+            ToDoListManager.serializer.toJson(task, new FileWriter(this.path));
         } catch (IOException e) {
 
         }
@@ -78,12 +80,21 @@ public class ToDoList {
         } catch (IOException e) {
 
         }
+    }
 
-        // Iterate through each of the Tasks and create
-        for (int i = 0; i < tasks.size(); i++) {
-            // TODO this might not work, we need access to the GUI to create the GUI elements for this list. This logic needs to go in a different class
+    /**
+     * Initializes the ToDoList's file with json containing its basic properties.
+     */
+    public void initialize() {
+
+        try {
+            ToDoListManager.serializer.toJson(this, new FileWriter(this.path));
+        } catch (IOException e) {
+            System.out.println("Error initializing list");
         }
+    }
 
-
+    public String toString() {
+        return this.title;
     }
 }
