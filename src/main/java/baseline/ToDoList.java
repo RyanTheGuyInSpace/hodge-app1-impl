@@ -5,42 +5,36 @@
 
 package baseline;
 
-import com.sun.tools.javac.Main;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.LinkedList;
 
 public class ToDoList {
     String path;
     String title;
-    LinkedList<Task> tasks;
+    ObservableList<Task> tasks = FXCollections.observableArrayList();
 
     /**
      * Adds a Task to this ToDoList
      * @param description The description of the Task to add.
-     * @return The newly created Task.
      *
-     * Create a Task object using the provided description
-     *
+     * Create a new Task
+     * Add the task to the ToDoList
+     * Re-initialize the ToDoList
      */
-    public Task addTask(String description) {
-
+    public void addTask(String description) {
         Task task = new Task();
 
         task.description = description;
         task.dueDate = null;
         task.isComplete = false;
 
-        try {
-            ToDoListManager.serializer.toJson(task, new FileWriter(this.path));
-        } catch (IOException e) {
+        this.tasks.add(task);
 
-        }
-
-        return task;
+        this.save();
     }
 
     /**
@@ -48,20 +42,13 @@ public class ToDoList {
      * @param newName The new name to set for this ToDoList.
      */
     public void rename(String newName) {
-
+        this.title = newName;
     }
 
     /**
      * Deletes this ToDoList
      */
     public void delete() {
-
-    }
-
-    /**
-     * Create the Json file for this list and save it
-     */
-    public void save() {
 
     }
 
@@ -85,15 +72,30 @@ public class ToDoList {
     /**
      * Initializes the ToDoList's file with json containing its basic properties.
      */
-    public void initialize() {
+    public void save() {
 
         try {
-            ToDoListManager.serializer.toJson(this, new FileWriter(this.path));
+            FileWriter writer = new FileWriter(this.path);
+
+            writer.write(ToDoListManager.serializer.toJson(this));
+            writer.flush();
+            writer.close();
         } catch (IOException e) {
             System.out.println("Error initializing list");
         }
     }
 
+    /**
+     * Deletes all tasks inside the ToDoList.
+     */
+    public void clearTasks() {
+        this.tasks.clear();
+    }
+
+    /**
+     * Gets the name of this ToDoList.
+     * @return The name of this ToDoList.
+     */
     public String toString() {
         return this.title;
     }

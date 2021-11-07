@@ -5,39 +5,36 @@
 
 package baseline;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
+import javax.security.auth.callback.Callback;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
-
-    public ToDoListManager manager = new ToDoListManager();
 
     ObservableList<ToDoList> toDoLists = FXCollections.observableArrayList();
 
     ObservableList<Task> tasks = FXCollections.observableArrayList();
 
     @FXML
-    public ListView toDoListingBox;
+    public ListView<ToDoList> toDoListingBox;
 
     @FXML
-    public ListView toDoListItemsBox;
+    public ListView<Task> toDoListItemsBox;
 
     @FXML
     public Scene scene;
@@ -54,7 +51,7 @@ public class MainController implements Initializable {
     @FXML
     private Button addTaskButton;
 
-    public long selectedItemIndex = 0;
+    public long selectedItemIndex = -1;
 
     /**
      * Creates a list using the text inside the adjacent text field.
@@ -65,7 +62,7 @@ public class MainController implements Initializable {
      * Clear the text inside newListInputField
      * Open up FileChooser so the user can choose where to store their ToDoList
      * When they select the desired location, Add the list as an element to the left pane and load it
-     * TODO initialize the file with json containing the name of the list
+     * Initialize the file's contents with json
      * ---
      */
     @FXML
@@ -81,7 +78,7 @@ public class MainController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select List Location");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+                new FileChooser.ExtensionFilter("Json Files", "*.json"));
 
         File selectedFile = fileChooser.showSaveDialog(newListButton.getScene().getWindow());
 
@@ -93,7 +90,7 @@ public class MainController implements Initializable {
 
         list.path = selectedFile.getPath();
 
-        list.initialize();
+        list.save();
 
         toDoLists.add(list);
 
@@ -104,8 +101,9 @@ public class MainController implements Initializable {
      * Loads the ToDoList that was just clicked.
      */
     public void loadList() {
-
+        System.out.println("Torn ACL");
         if (toDoListingBox.getSelectionModel().getSelectedItem() == null) {
+            System.out.println("Selected item is null");
             return;
         }
 
@@ -115,8 +113,6 @@ public class MainController implements Initializable {
         } else {
 
         }
-
-        System.out.println("Newly selected list " + toDoListingBox.getSelectionModel().getSelectedItem().toString());
     }
 
     /**
@@ -139,6 +135,10 @@ public class MainController implements Initializable {
         ToDoList currentList = (ToDoList) toDoListingBox.getSelectionModel().getSelectedItem();
 
         currentList.addTask(description);
+
+        this.loadList();
+
+        addTaskField.clear();
     }
 
     @Override

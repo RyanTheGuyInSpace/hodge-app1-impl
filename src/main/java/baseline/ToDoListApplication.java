@@ -25,6 +25,7 @@ public class ToDoListApplication extends javafx.application.Application {
         Scene scene = new Scene(root, 800, 600);
 
         primaryStage.setScene(scene);
+
         primaryStage.show();
     }
 }

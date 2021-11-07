@@ -8,7 +8,6 @@ package baseline;
 import java.util.Date;
 
 public class Task {
-    long id;
     String description;
 
     /**
@@ -22,5 +21,9 @@ public class Task {
      */
     public void delete() {
 
+    }
+
+    public String toString() {
+        return this.description;
     }
 }

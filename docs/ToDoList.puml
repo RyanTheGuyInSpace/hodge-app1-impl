@@ -16,7 +16,6 @@ class ToDoList {
 }
 
 class Task {
-    -long id;
     -String description;
     -Date dueDate;
     'Format due date as YYYY-MM-DD'

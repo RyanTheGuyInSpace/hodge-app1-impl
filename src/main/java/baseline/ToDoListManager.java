@@ -12,7 +12,7 @@ public class ToDoListManager {
     /**
      * Used to serialize and deserialize the Json of ToDoLists and Tasks
      */
-    public static Gson serializer = new Gson();
+    public static final Gson serializer = new Gson();
 
     /**
      * Creates a new ToDoList.

@@ -3,9 +3,6 @@ package baseline;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,10 +10,35 @@ class ToDoListTest {
 
     @Test
     void addTask() {
+        ToDoList list = new ToDoList();
+
+        list.title = "New List";
+        list.path = "C:\\Users\\ryo_h\\Documents\\TestFiles\\testList2.json";
+
+        list.save();
+
+        int num = list.tasks.size();
+
+        list.addTask("Do stuff");
+
+        int num2 = list.tasks.size();
+
+        assertNotEquals(num, num2);
     }
 
     @Test
     void rename() {
+        ToDoList list = new ToDoList();
+
+        list.title = "List One";
+
+        String name1 = list.title;
+
+        list.rename("List Two");
+
+        String name2 = list.title;
+
+        assertNotEquals(name1, name2);
     }
 
     @Test
@@ -24,21 +46,17 @@ class ToDoListTest {
     }
 
     @Test
-    void save() {
-    }
-
-    @Test
     void load() {
     }
 
     @Test
-    void initialize() {
+    void save() {
         ToDoList list = new ToDoList();
 
         list.title = "Fresh ToDoList";
         list.path = "C:\\Users\\ryo_h\\Documents\\TestFiles\\testList.json";
 
-        list.initialize();
+        list.save();
 
         try {
             BufferedReader br = new BufferedReader(
@@ -50,7 +68,5 @@ class ToDoListTest {
         } catch (IOException e) {
 
         }
-
-
     }
 }
