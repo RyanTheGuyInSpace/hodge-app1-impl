@@ -50,7 +50,7 @@ class ToDoListTest {
     }
 
     @Test
-    void save() {
+    void initialize() {
         ToDoList list = new ToDoList();
 
         list.title = "Fresh ToDoList";

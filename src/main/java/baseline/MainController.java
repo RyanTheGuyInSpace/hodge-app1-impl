@@ -31,6 +31,7 @@ import javax.security.auth.callback.Callback;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -84,6 +85,9 @@ public class MainController implements Initializable {
     @FXML
     private MenuItem deleteAllTasksButton;
 
+    @FXML
+    private Button editTaskSaveButton;
+
     public long selectedItemIndex = -1;
 
     /**
@@ -131,7 +135,13 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Loads the ToDoList that was just clicked and focuses the field to add a task
+     * Loads the ToDoList that was just clicked and
+     * focuses the field to add a task and clears the editTaskField
+     *
+     * ---
+     * Get the currently selected ToDoList
+     * Set the list of Tasks in this controller to the
+     * ---
      */
     public void loadList() {
         if (toDoListingBox.getSelectionModel().getSelectedItem() == null) {
@@ -144,6 +154,28 @@ public class MainController implements Initializable {
         }
 
         addTaskField.requestFocus();
+        editTaskField.clear();
+    }
+
+    /**
+     * Loads the last clicked Task into the editTaskField to allow it to be edited
+     *
+     * ---
+     * Get the currently selected Task
+     * Set the editTaskField to the selected Task's description
+     * Focus the editTaskField for quick access to editing
+     * ---
+     */
+    public void loadTask() {
+        if (toDoListingBox.getSelectionModel().getSelectedItem() == null) {
+            return;
+        }
+
+        if (toDoListItemsBox.getSelectionModel().getSelectedItem() != null) {
+            Task task = toDoListItemsBox.getSelectionModel().getSelectedItem();
+            this.editTaskField.setText(task.getDescription());
+            this.editTaskField.requestFocus();
+        }
     }
 
     /**
@@ -176,6 +208,13 @@ public class MainController implements Initializable {
     /**
      * Toggles the currently selected Task to be complete or incomplete
      * based on the current state of its isComplete field
+     *
+     * ---
+     * Get the currently selected Task
+     * If the task is complete, set it to be incomplete
+     * If the task is incomplete, set it to be complete
+     * Reload the list
+     * ---
      */
     public void toggleTaskComplete() {
         if (toDoListItemsBox.getSelectionModel().getSelectedItem() != null) {
@@ -191,34 +230,34 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Begins editing of the currently selected Task
+     * Edits currently selected Task
+     *
+     * ---
+     * Get the currently selected ToDoList
+     * Get the currently selected Task from that ToDoList
+     * Get the text from the editTaskField
+     * Set the description of the Task to the text that was inside the editTaskField
+     * Save the ToDoList
+     * Reload the ToDoList
+     * Clear the editTaskField
+     * ---
      */
     public void editTask() {
         if (toDoListItemsBox.getSelectionModel().getSelectedItem() != null) {
+            ToDoList list = toDoListingBox.getSelectionModel().getSelectedItem();
+
             Task task = toDoListItemsBox.getSelectionModel().getSelectedItem();
 
-            Stage edit = new Stage();
+            String description = editTaskField.getText();
 
-            edit.initModality(Modality.APPLICATION_MODAL);
-            edit.initOwner(newListButton.getScene().getWindow());
-
-            edit.setTitle("Edit Task");
-
-            try {
-                Parent root = FXMLLoader.load(getClass().getResource("EditTask.fxml"));
-
-                editTaskScene = new Scene(root, 600, 200);
-
-                edit.setScene(editTaskScene);
-
-                editTaskField.setText(task.getDescription());
-
-                edit.show();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (description.isBlank() || description.isEmpty()) {
+                return;
             }
-        } else {
-            System.out.println("No item currently selected");
+
+            task.setDescription(description);
+            list.save();
+            loadList();
+            editTaskField.clear();
         }
     }
 
@@ -272,6 +311,12 @@ public class MainController implements Initializable {
         addTaskField.setOnKeyPressed(event -> {
             if(event.getCode().equals(KeyCode.ENTER)) {
                 addTask();
+            }
+        });
+
+        editTaskField.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.ENTER)) {
+                editTask();
             }
         });
 
