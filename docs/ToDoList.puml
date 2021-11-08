@@ -1,32 +1,34 @@
 @startuml
 
 class ToDoListManager {
+    +Gson serializer;
     +createList(String title);
-    +selectList(long id);
 }
 
 class ToDoList {
+    -String path;
     -String title;
-    -LinkedList<Task> tasks;
+    -ObservableList<Task> tasks;
 
     +addTask(String description);
-    +deleteTask();
-    +rename();
-    +delete();
+    +removeTask(Task task);
+    +clearAllTasks();
+    +load();
+    +save();
+    +toString();
 }
 
 class Task {
     -String description;
     -Date dueDate;
     'Format due date as YYYY-MM-DD'
-
     -private boolean isComplete;
 
+    +setCompletion(boolean complete);
+    +isComplete();
     +setDescription(String description);
-    +setDueDate(Date dueDate);
-    +setComplete();
-    +setIncomplete();
-    +delete();
+    +getDescription();
+    +toString();
 }
 
 @enduml

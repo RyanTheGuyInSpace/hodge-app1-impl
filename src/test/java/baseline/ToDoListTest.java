@@ -27,34 +27,61 @@ class ToDoListTest {
     }
 
     @Test
-    void rename() {
-        ToDoList list = new ToDoList();
-
-        list.title = "List One";
-
-        String name1 = list.title;
-
-        list.rename("List Two");
-
-        String name2 = list.title;
-
-        assertNotEquals(name1, name2);
-    }
-
-    @Test
-    void delete() {
-    }
-
-    @Test
-    void load() {
-    }
-
-    @Test
-    void initialize() {
+    void removeTask() {
         ToDoList list = new ToDoList();
 
         list.title = "Fresh ToDoList";
-        list.path = "C:\\Users\\ryo_h\\Documents\\TestFiles\\testList.json";
+        list.path = "C:\\Users\\ryo_h\\Documents\\TestFiles\\testList3.json";
+
+        list.save();
+
+        list.addTask("Something something");
+
+        list.save();
+
+        int num1 = list.tasks.size();
+
+        Task task = list.tasks.get(0);
+
+        list.removeTask(task);
+
+        int num2 = list.tasks.size();
+
+        assertNotEquals(num1, num2);
+    }
+
+    @Test
+    void clearAllTasks() {
+        ToDoList list = new ToDoList();
+
+        list.title = "Fresh ToDoList";
+        list.path = "C:\\Users\\ryo_h\\Documents\\TestFiles\\testList5.json";
+
+        list.save();
+
+        list.addTask("Something something");
+
+        list.save();
+
+        int num1 = list.tasks.size();
+
+        Task task = list.tasks.get(0);
+
+        list.clearAllTasks();
+
+        int num2 = list.tasks.size();
+
+        assertNotEquals(num1, num2);
+    }
+
+    @Test
+    void save() {
+        ToDoList list = new ToDoList();
+
+        list.title = "Fresh ToDoList";
+        list.path = "C:\\Users\\ryo_h\\Documents\\TestFiles\\testList4.json";
+
+        list.addTask("Test item");
 
         list.save();
 
@@ -62,11 +89,23 @@ class ToDoListTest {
             BufferedReader br = new BufferedReader(
                     new FileReader(list.path));
 
-            ToDoList newList = ToDoListManager.serializer.fromJson(br, ToDoList.class);
-
-            assertEquals(list.title, newList.title);
+            assertNotNull(br.readLine());
         } catch (IOException e) {
 
         }
+    }
+
+    @Test
+    void ToString() {
+        ToDoList list = new ToDoList();
+
+        list.title = "Fresh ToDoList";
+        list.path = "C:\\Users\\ryo_h\\Documents\\TestFiles\\testList6.json";
+
+        list.addTask("Test item");
+
+        list.save();
+
+        assertEquals(list.title, list.toString());
     }
 }

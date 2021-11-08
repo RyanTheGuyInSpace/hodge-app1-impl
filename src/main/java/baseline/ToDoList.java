@@ -66,24 +66,6 @@ public class ToDoList {
     }
 
     /**
-     * Reads in all the ToDoList's Tasks
-     *
-     * ---
-     * Use Gson to open the ToDoList's file
-     * Read the ToDoList's file into a list of Tasks
-     * Iterate through the tasks and display them on the GUI, remembering to give each task an incremental id
-     * ---
-     */
-    public void load() {
-        // Read the json file and get all the Tasks and store them inside the tasks list
-        try {
-            ToDoListManager.serializer.fromJson(new FileReader(this.path), tasks.getClass());
-        } catch (IOException e) {
-
-        }
-    }
-
-    /**
      * Initializes the ToDoList's file with json containing its basic properties.
      *
      * ---
@@ -105,17 +87,6 @@ public class ToDoList {
         } catch (IOException e) {
             System.out.println("Error initializing list");
         }
-    }
-
-    /**
-     * Deletes all tasks inside the ToDoList.
-     *
-     * ---
-     * Call clear on this ToDoList's Tasks.
-     * ---
-     */
-    public void clearTasks() {
-        this.tasks.clear();
     }
 
     /**
