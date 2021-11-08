@@ -27,6 +27,9 @@
                       <MenuItem fx:id="deleteTaskButton" mnemonicParsing="false" onAction="#deleteTask" text="Delete" />
                       <MenuItem fx:id="setTaskDueDateButton" mnemonicParsing="false" text="Set Due Date" />
                       <MenuItem fx:id="deleteAllTasksButton" mnemonicParsing="false" onAction="#deleteAllTasks" text="Delete All" />
+                      <MenuItem fx:id="showAllButton" mnemonicParsing="false" onAction="#loadList" text="Show All" />
+                      <MenuItem fx:id="showCompleteButton" mnemonicParsing="false" onAction="#loadComplete" text="Show Complete" />
+                      <MenuItem fx:id="showIncompleteButton" mnemonicParsing="false" onAction="#loadIncomplete" text="Show Incomplete" />
                      </items>
                   </ContextMenu>
                </contextMenu>

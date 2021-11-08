@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class MainController implements Initializable {
 
@@ -84,6 +85,15 @@ public class MainController implements Initializable {
 
     @FXML
     private MenuItem deleteAllTasksButton;
+
+    @FXML
+    private MenuItem showCompleteButton;
+
+    @FXML
+    private MenuItem showIncompleteButton;
+
+    @FXML
+    private MenuItem showAllButton;
 
     @FXML
     private Button editTaskSaveButton;
@@ -154,6 +164,38 @@ public class MainController implements Initializable {
         }
 
         addTaskField.requestFocus();
+        editTaskField.clear();
+    }
+
+    public void loadComplete() {
+        if (toDoListingBox.getSelectionModel().getSelectedItem() == null) {
+            return;
+        }
+
+        // Only load the list if the index is different from the currently selected index
+        if (toDoListingBox.getSelectionModel().getSelectedIndex() != selectedItemIndex) {
+            this.tasks.setAll(toDoLists.get(toDoListingBox.getSelectionModel().getSelectedIndex())
+                    .tasks
+                    .stream()
+                    .filter(a -> a.isComplete()).collect(Collectors.toList()));
+        }
+
+        editTaskField.clear();
+    }
+
+    public void loadIncomplete() {
+        if (toDoListingBox.getSelectionModel().getSelectedItem() == null) {
+            return;
+        }
+
+        // Only load the list if the index is different from the currently selected index
+        if (toDoListingBox.getSelectionModel().getSelectedIndex() != selectedItemIndex) {
+            this.tasks.setAll(toDoLists.get(toDoListingBox.getSelectionModel().getSelectedIndex())
+                    .tasks
+                    .stream()
+                    .filter(a -> !a.isComplete()).collect(Collectors.toList()));
+        }
+
         editTaskField.clear();
     }
 
