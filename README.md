@@ -28,7 +28,7 @@ from the to-do list.
 To delete all tasks in the current to-do list, right click anywhere inside the
 task list on the right side of the application and select "Delete All".
 
-# Editing a items/tasks
+# Editing items/tasks
 
 To edit a task, left click on it to highlight it. The right-most text box on the
 right side of the application will populate with that item's description and
