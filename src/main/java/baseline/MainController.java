@@ -167,6 +167,13 @@ public class MainController implements Initializable {
         editTaskField.clear();
     }
 
+    /**
+     * Loads only the completed Tasks from the currently selected ToDoList
+     *
+     * ---
+     * Set the currently listed tasks to ONLY the tasks that are completed
+     * ---
+     */
     public void loadComplete() {
         if (toDoListingBox.getSelectionModel().getSelectedItem() == null) {
             return;
@@ -183,6 +190,13 @@ public class MainController implements Initializable {
         editTaskField.clear();
     }
 
+    /**
+     * Loads only the uncompleted Tasks from the currently selected ToDoList
+     *
+     * ---
+     * Set the currently listed tasks to ONLY the tasks that are incomplete
+     * ---
+     */
     public void loadIncomplete() {
         if (toDoListingBox.getSelectionModel().getSelectedItem() == null) {
             return;
