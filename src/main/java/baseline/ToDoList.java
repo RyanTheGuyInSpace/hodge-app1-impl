@@ -21,16 +21,16 @@ public class ToDoList {
      * Adds a Task to this ToDoList
      * @param description The description of the Task to add.
      *
-     * Create a new Task
-     * Add the task to the ToDoList
-     * Re-initialize the ToDoList
+     * Create a new Task using the provided description
+     * Add the task to this ToDoList
+     * Save the ToDoList
      */
     public void addTask(String description) {
         Task task = new Task();
 
-        task.description = description;
+        task.setDescription(description);
         task.dueDate = null;
-        task.isComplete = false;
+        task.setCompletion(false);
 
         this.tasks.add(task);
 
@@ -38,29 +38,43 @@ public class ToDoList {
     }
 
     /**
-     * Renames this ToDoList.
-     * @param newName The new name to set for this ToDoList.
+     * Removes the provided Task from this ToDoList
+     * @param task The Task to remove from this ToDoList
      */
-    public void rename(String newName) {
-        this.title = newName;
+    public void removeTask(Task task) {
+
+        try {
+            this.tasks.remove(task);
+            this.save();
+        } catch (Exception e) {
+
+        }
+
     }
 
     /**
-     * Deletes this ToDoList
+     * Deletes all Tasks from this ToDoList
+     *
+     * ---
+     * Remove all Tasks from this ToDoList's list of Tasks
+     * Save the ToDoList
+     * ---
      */
-    public void delete() {
-
+    public void clearAllTasks() {
+        this.tasks.clear();
+        this.save();
     }
 
     /**
      * Reads in all the ToDoList's Tasks
      *
+     * ---
      * Use Gson to open the ToDoList's file
      * Read the ToDoList's file into a list of Tasks
      * Iterate through the tasks and display them on the GUI, remembering to give each task an incremental id
+     * ---
      */
     public void load() {
-
         // Read the json file and get all the Tasks and store them inside the tasks list
         try {
             ToDoListManager.serializer.fromJson(new FileReader(this.path), tasks.getClass());
@@ -71,6 +85,14 @@ public class ToDoList {
 
     /**
      * Initializes the ToDoList's file with json containing its basic properties.
+     *
+     * ---
+     * Create a new FileWriter
+     * Use Gson to convert this ToDoList to json format
+     * Use the FileWriter to write the json string to the file
+     * Flush the file
+     * Close the file
+     * ---
      */
     public void save() {
 
@@ -87,6 +109,10 @@ public class ToDoList {
 
     /**
      * Deletes all tasks inside the ToDoList.
+     *
+     * ---
+     * Call clear on this ToDoList's Tasks.
+     * ---
      */
     public void clearTasks() {
         this.tasks.clear();

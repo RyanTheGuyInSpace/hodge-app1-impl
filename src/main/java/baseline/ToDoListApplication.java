@@ -24,6 +24,8 @@ public class ToDoListApplication extends javafx.application.Application {
 
         Scene scene = new Scene(root, 800, 600);
 
+        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+
         primaryStage.setScene(scene);
 
         primaryStage.show();

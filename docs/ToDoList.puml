@@ -20,7 +20,7 @@ class Task {
     -Date dueDate;
     'Format due date as YYYY-MM-DD'
 
-    -boolean isComplete;
+    -private boolean isComplete;
 
     +setDescription(String description);
     +setDueDate(Date dueDate);

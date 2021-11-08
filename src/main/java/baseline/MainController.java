@@ -9,14 +9,23 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxListCell;
+import javafx.scene.control.cell.TextFieldListCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import javax.security.auth.callback.Callback;
 import java.io.File;
@@ -40,6 +49,15 @@ public class MainController implements Initializable {
     public Scene scene;
 
     @FXML
+    public Scene editTaskScene;
+
+    @FXML
+    public TextField editTaskField;
+
+    @FXML
+    public Button editTaskSet;
+
+    @FXML
     public TextField newListInputField;
 
     @FXML
@@ -50,6 +68,21 @@ public class MainController implements Initializable {
 
     @FXML
     private Button addTaskButton;
+
+    @FXML
+    private MenuItem toggleTaskCompleteButton;
+
+    @FXML
+    private MenuItem editTaskButton;
+
+    @FXML
+    private MenuItem deleteTaskButton;
+
+    @FXML
+    private MenuItem setTaskDueDateButton;
+
+    @FXML
+    private MenuItem deleteAllTasksButton;
 
     public long selectedItemIndex = -1;
 
@@ -62,7 +95,7 @@ public class MainController implements Initializable {
      * Clear the text inside newListInputField
      * Open up FileChooser so the user can choose where to store their ToDoList
      * When they select the desired location, Add the list as an element to the left pane and load it
-     * Initialize the file's contents with json
+     * Save the ToDoList to write it to file
      * ---
      */
     @FXML
@@ -98,21 +131,19 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Loads the ToDoList that was just clicked.
+     * Loads the ToDoList that was just clicked and focuses the field to add a task
      */
     public void loadList() {
-        System.out.println("Torn ACL");
         if (toDoListingBox.getSelectionModel().getSelectedItem() == null) {
-            System.out.println("Selected item is null");
             return;
         }
 
         // Only load the list if the index is different from the currently selected index
         if (toDoListingBox.getSelectionModel().getSelectedIndex() != selectedItemIndex) {
             this.tasks.setAll(toDoLists.get(toDoListingBox.getSelectionModel().getSelectedIndex()).tasks);
-        } else {
-
         }
+
+        addTaskField.requestFocus();
     }
 
     /**
@@ -132,18 +163,122 @@ public class MainController implements Initializable {
             return;
         }
 
-        ToDoList currentList = (ToDoList) toDoListingBox.getSelectionModel().getSelectedItem();
+        ToDoList currentList = toDoListingBox.getSelectionModel().getSelectedItem();
 
         currentList.addTask(description);
 
         this.loadList();
 
         addTaskField.clear();
+        addTaskField.requestFocus();
+    }
+
+    /**
+     * Toggles the currently selected Task to be complete or incomplete
+     * based on the current state of its isComplete field
+     */
+    public void toggleTaskComplete() {
+        if (toDoListItemsBox.getSelectionModel().getSelectedItem() != null) {
+            Task task = toDoListItemsBox.getSelectionModel().getSelectedItem();
+
+            // Toggle the completion status
+            task.setCompletion(!task.isComplete());
+
+            // Save and reload
+            toDoListingBox.getSelectionModel().getSelectedItem().save();
+            loadList();
+        }
+    }
+
+    /**
+     * Begins editing of the currently selected Task
+     */
+    public void editTask() {
+        if (toDoListItemsBox.getSelectionModel().getSelectedItem() != null) {
+            Task task = toDoListItemsBox.getSelectionModel().getSelectedItem();
+
+            Stage edit = new Stage();
+
+            edit.initModality(Modality.APPLICATION_MODAL);
+            edit.initOwner(newListButton.getScene().getWindow());
+
+            edit.setTitle("Edit Task");
+
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("EditTask.fxml"));
+
+                editTaskScene = new Scene(root, 600, 200);
+
+                edit.setScene(editTaskScene);
+
+                editTaskField.setText(task.getDescription());
+
+                edit.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("No item currently selected");
+        }
+    }
+
+    /**
+     * Deletes the currently selected Task.
+     *
+     * ---
+     * Get the currently selected ToDoList
+     * Get the currently selected Task
+     * Remove the currently selected Task from the currently selected ToDoList
+     * Reload the ToDoList
+     * ---
+     */
+    public void deleteTask() {
+        if (toDoListItemsBox.getSelectionModel().getSelectedItem() != null) {
+
+            ToDoList list = toDoListingBox.getSelectionModel().getSelectedItem();
+
+            list.removeTask(toDoListItemsBox.getSelectionModel().getSelectedItem());
+
+            loadList();
+        }
+    }
+
+    /**
+     * Deletes all Tasks from the currently selected ToDoList.
+     *
+     * ---
+     * Get the currently selected ToDoList
+     * If the Tasks list isn't empty, clear it
+     * Reload the ToDoList
+     * ---
+     */
+    public void deleteAllTasks() {
+        if (toDoListingBox.getSelectionModel().getSelectedItem() != null) {
+
+            ToDoList list = toDoListingBox.getSelectionModel().getSelectedItem();
+
+            if (!list.tasks.isEmpty()) {
+                list.clearAllTasks();
+                loadList();
+            }
+        }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         toDoListingBox.setItems(toDoLists);
         toDoListItemsBox.setItems(tasks);
+
+        addTaskField.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.ENTER)) {
+                addTask();
+            }
+        });
+
+        newListInputField.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.ENTER)) {
+                createList();
+            }
+        });
     }
 }
